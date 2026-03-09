@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NEXUS Gaming Club — Игры Нового Уровня</title>
+  <meta name="description" content="Лучший PC игровой клуб. Топовые компьютеры, максимальная скорость, элитные турниры." />
+  <link rel="stylesheet" href="styles/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='24' font-size='24'>🎮</text></svg>" />
+</head>
+<body>
+
+<canvas id="particles-canvas"></canvas>
+<div class="noise-overlay"></div>
+<div class="scan-line"></div>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon">
+        <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="18,2 34,10 34,26 18,34 2,26 2,10" fill="none" stroke="url(#logoGrad)" stroke-width="1.5"/>
+          <path d="M10 18h4M16 14v8M20 16h6M23 13v10" stroke="url(#logoGrad2)" stroke-width="1.5" stroke-linecap="round"/>
+          <defs>
+            <linearGradient id="logoGrad" x1="2" y1="2" x2="34" y2="34" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#bf00ff"/>
+              <stop offset="100%" stop-color="#00d4ff"/>
+            </linearGradient>
+            <linearGradient id="logoGrad2" x1="10" y1="13" x2="26" y2="28" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#00d4ff"/>
+              <stop offset="100%" stop-color="#bf00ff"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <span class="nav-logo-text">NEXUS</span>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Главная</a></li>
+      <li><a href="pages/zones.html">Игровые Зоны</a></li>
+      <li><a href="pages/prices.html">Цены</a></li>
+      <li><a href="pages/tournaments.html">Турниры</a></li>
+      <li><a href="pages/contact.html">Контакты</a></li>
+      <li><a href="pages/prices.html" class="nav-cta"><span>Забронировать ПК</span></a></li>
+    </ul>
+
+    <button class="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="mobile-menu">
+  <a href="index.html">Главная</a>
+  <a href="pages/zones.html">Игровые Зоны</a>
+  <a href="pages/prices.html">Цены</a>
+  <a href="pages/tournaments.html">Турниры</a>
+  <a href="pages/contact.html">Контакты</a>
+</div>
+
+<main>
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+
+    <div class="hero-content">
+      <div class="hero-eyebrow">Основан в 2024 &nbsp;·&nbsp; Премиальный Игровой Клуб</div>
+
+      <h1 class="hero-title">
+        <span class="hero-title-line1">Следующий</span>
+        <span class="hero-title-line2">Уровень</span>
+      </h1>
+
+      <p class="hero-subtitle">Лучший опыт игрового ПК-клуба. Элитное железо, молниеносная скорость и сообщество чемпионов.</p>
+
+      <div class="hero-buttons">
+        <a href="pages/prices.html" class="btn-primary">
+          <span>Забронировать ПК</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="position:relative;z-index:1">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+        <a href="pages/prices.html" class="btn-secondary">
+          <span>Смотреть Цены</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-number" data-count="120" data-suffix="+">0+</div>
+        <div class="stat-label">Игровых ПК</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number" data-count="240" data-suffix="Hz">0Hz</div>
+        <div class="stat-label">Частота кадров</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number" data-count="1" data-suffix="Гбит/с">0Гбит/с</div>
+        <div class="stat-label">Скорость интернета</div>
+      </div>
+    </div>
+
+    <div class="hero-scroll-indicator">
+      <div class="scroll-mouse"></div>
+      <span>Прокрутить</span>
+    </div>
+  </section>
+
+  <section class="features-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Почему мы</span>
+        <h2 class="section-title">Создано для <br>Производительности</h2>
+        <p class="section-desc">Каждая деталь заточена под максимальный игровой опыт.</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="url(#feat1)" stroke-width="1.5">
+              <rect x="2" y="3" width="20" height="14" rx="2"/>
+              <path d="M8 21h8M12 17v4"/>
+              <circle cx="12" cy="10" r="3"/>
+              <defs>
+                <linearGradient id="feat1" x1="2" y1="3" x2="22" y2="21" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#bf00ff"/><stop offset="1" stop-color="#00d4ff"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <h3 class="feature-title">Топовые ПК</h3>
+          <p class="feature-desc">GPU RTX 4090 / 4080, процессоры Intel i9 и AMD Ryzen 9. Каждая машина — зверь.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="url(#feat2)" stroke-width="1.5">
+              <rect x="2" y="3" width="20" height="14" rx="2"/>
+              <path d="M8 21h8M12 17v4"/>
+              <path d="M7 8h2v3H7zM11 7h2v4h-2zM15 9h2v2h-2z"/>
+              <defs>
+                <linearGradient id="feat2" x1="2" y1="3" x2="22" y2="21" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#00d4ff"/><stop offset="1" stop-color="#bf00ff"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <h3 class="feature-title">Мониторы 240Гц</h3>
+          <p class="feature-desc">Ультраплавные дисплеи 1440p с временем отклика 1мс — каждый кадр имеет значение.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="url(#feat3)" stroke-width="1.5">
+              <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
+              <defs>
+                <linearGradient id="feat3" x1="4" y1="3" x2="20" y2="21" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#bf00ff"/><stop offset="1" stop-color="#00d4ff"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <h3 class="feature-title">Молниеносный Интернет</h3>
+          <p class="feature-desc">Выделенная оптика 10Гбит/с с 1Гбит/с на каждое место. Ноль лагов, максимум скорости.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="url(#feat4)" stroke-width="1.5">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+              <defs>
+                <linearGradient id="feat4" x1="2" y1="4" x2="22" y2="22" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#00d4ff"/><stop offset="1" stop-color="#bf00ff"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <h3 class="feature-title">Удобные Кресла</h3>
+          <p class="feature-desc">Премиальные кресла Secretlab и Herman Miller для многочасовых игровых сессий без усталости.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="games-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Библиотека игр</span>
+        <h2 class="section-title">Топовые Игры</h2>
+        <p class="section-desc">Все любимые тайтлы, готовые к запуску на максимальных настройках.</p>
+      </div>
+
+      <div class="games-grid">
+        <div class="game-card">
+          <div class="game-card-bg cs2-bg">
+            <div class="game-logo-placeholder">CS2</div>
+            <img style="max-width: 100%;" src="img/cs2.webp" alt="cs">
+          </div>
+          <div class="game-card-glow"></div>
+          <div class="game-card-overlay"></div>
+          <div class="game-card-content">
+            <span class="game-tag">FPS</span>
+            <div class="game-name">CS2</div>
+          </div>
+          <div class="game-accent-line cs2-accent"></div>
+        </div>
+
+        <div class="game-card">
+          <div class="game-card-bg dota-bg">
+            <div class="game-logo-placeholder">DOTA</div>
+            <img style="max-width: 100%;" src="img/dota 2.webp" alt="dota">
+          </div>
+          <div class="game-card-glow"></div>
+          <div class="game-card-overlay"></div>
+          <div class="game-card-content">
+            <span class="game-tag">MOBA</span>
+            <div class="game-name">Dota 2</div>
+          </div>
+          <div class="game-accent-line dota-accent"></div>
+        </div>
+
+        <div class="game-card">
+          <div class="game-card-bg valorant-bg">
+            <div class="game-logo-placeholder">VAL</div>
+            <img style="max-width: 100%;" src="img/valorant.webp" alt="val">
+          </div>
+          <div class="game-card-glow"></div>
+          <div class="game-card-overlay"></div>
+          <div class="game-card-content">
+            <span class="game-tag">Tactical</span>
+            <div class="game-name">Valorant</div>
+          </div>
+          <div class="game-accent-line valorant-accent"></div>
+        </div>
+
+        <div class="game-card">
+          <div class="game-card-bg fortnite-bg">
+            <div class="game-logo-placeholder">FN</div>
+            <img style="max-width: 100%;" src="img/fortnite.webp" alt="fn">
+          </div>
+          <div class="game-card-glow"></div>
+          <div class="game-card-overlay"></div>
+          <div class="game-card-content">
+            <span class="game-tag">Battle Royale</span>
+            <div class="game-name">Fortnite</div>
+          </div>
+          <div class="game-accent-line fortnite-accent"></div>
+        </div>
+
+        <div class="game-card">
+          <div class="game-card-bg apex-bg">
+            <div class="game-logo-placeholder">APEX</div>
+            <img style="max-width: 100%;" src="img/apex.webp" alt="apex">
+          </div>
+          <div class="game-card-glow"></div>
+          <div class="game-card-overlay"></div>
+          <div class="game-card-content">
+            <span class="game-tag">Battle Royale</span>
+            <div class="game-name">Apex Legends</div>
+          </div>
+          <div class="game-accent-line apex-accent"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-logo-area">
+        <a href="index.html" class="footer-logo">
+          <div class="nav-logo-icon" style="width:28px;height:28px">
+            <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <polygon points="18,2 34,10 34,26 18,34 2,26 2,10" fill="none" stroke="url(#fLogoG)" stroke-width="1.5"/>
+              <path d="M10 18h4M16 14v8M20 16h6M23 13v10" stroke="url(#fLogoG2)" stroke-width="1.5" stroke-linecap="round"/>
+              <defs>
+                <linearGradient id="fLogoG" x1="2" y1="2" x2="34" y2="34" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#bf00ff"/><stop offset="100%" stop-color="#00d4ff"/>
+                </linearGradient>
+                <linearGradient id="fLogoG2" x1="10" y1="13" x2="26" y2="28" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#00d4ff"/><stop offset="100%" stop-color="#bf00ff"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <span class="footer-logo-text">NEXUS</span>
+        </a>
+        <p class="footer-tagline">Лучший PC игровой клуб. Место, где рождаются чемпионы.</p>
+      </div>
+
+      <div class="footer-nav-groups">
+        <div class="footer-nav-group">
+          <h5>Навигация</h5>
+          <a href="index.html">Главная</a>
+          <a href="pages/zones.html">Игровые Зоны</a>
+          <a href="pages/prices.html">Цены</a>
+          <a href="pages/tournaments.html">Турниры</a>
+          <a href="pages/contact.html">Контакты</a>
+        </div>
+        <div class="footer-nav-group">
+          <h5>Соцсети</h5>
+          <a href="#">Discord</a>
+          <a href="#">Instagram</a>
+          <a href="#">Twitter / X</a>
+          <a href="#">YouTube</a>
+        </div>
+        <div class="footer-nav-group">
+          <h5>Часы работы</h5>
+          <a href="#">Пн–Чт: 10:00–00:00</a>
+          <a href="#">Пт–Сб: 10:00–03:00</a>
+          <a href="#">Воскресенье: 12:00–22:00</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span class="footer-copyright">© 2024 NEXUS Gaming Club. Все права защищены.</span>
+      <div class="footer-bottom-links">
+        <a href="#">Политика конфиденциальности</a>
+        <a href="#">Условия использования</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="scripts/main.js"></script>
+</body>
+</html>

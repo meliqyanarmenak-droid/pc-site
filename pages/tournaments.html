@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Турниры — NEXUS Gaming Club</title>
+  <meta name="description" content="Join weekly esports tournaments. CS2, Valorant, Dota 2, Apex. Win real prize pools." />
+  <link rel="stylesheet" href="../styles/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='24' font-size='24'>🎮</text></svg>" />
+  <style>
+    .ticker-wrap {
+      overflow: hidden;
+      background: rgba(157, 0, 255, 0.06);
+      border-top: 1px solid rgba(157, 0, 255, 0.12);
+      border-bottom: 1px solid rgba(157, 0, 255, 0.12);
+      padding: 12px 0;
+      margin-bottom: 60px;
+      position: relative;
+    }
+    .ticker-wrap::before,
+    .ticker-wrap::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 80px;
+      z-index: 2;
+    }
+    .ticker-wrap::before {
+      left: 0;
+      background: linear-gradient(90deg, var(--bg-primary), transparent);
+    }
+    .ticker-wrap::after {
+      right: 0;
+      background: linear-gradient(270deg, var(--bg-primary), transparent);
+    }
+    .ticker {
+      display: flex;
+      gap: 60px;
+      animation: tickerScroll 30s linear infinite;
+      width: max-content;
+    }
+    .ticker-item {
+      font-family: var(--font-heading);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .ticker-item span {
+      color: var(--neon-purple);
+    }
+    .ticker-dot {
+      width: 4px;
+      height: 4px;
+      background: var(--neon-blue);
+      border-radius: 50%;
+    }
+    @keyframes tickerScroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .tournament-card .tournament-desc {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-top: 8px;
+    }
+    .leaderboard-section {
+      margin-top: 80px;
+      padding-bottom: 120px;
+    }
+    .leaderboard-table {
+      background: var(--bg-card);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .leaderboard-head {
+      display: grid;
+      grid-template-columns: 60px 1fr 120px 120px 100px;
+      padding: 16px 28px;
+      border-bottom: 1px solid var(--glass-border);
+      font-family: var(--font-heading);
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      background: rgba(255,255,255,0.02);
+    }
+    .leaderboard-row {
+      display: grid;
+      grid-template-columns: 60px 1fr 120px 120px 100px;
+      padding: 18px 28px;
+      border-bottom: 1px solid var(--glass-border);
+      align-items: center;
+      transition: background 0.2s ease;
+    }
+    .leaderboard-row:last-child {
+      border-bottom: none;
+    }
+    .leaderboard-row:hover {
+      background: rgba(157, 0, 255, 0.03);
+    }
+    .rank-number {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+    .rank-1 { color: #ffd700; }
+    .rank-2 { color: #c0c0c0; }
+    .rank-3 { color: #cd7f32; }
+    .player-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .player-avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .player-name {
+      font-family: var(--font-heading);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .player-handle {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+    .player-game-tag {
+      font-family: var(--font-heading);
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--neon-blue);
+    }
+    .player-wins {
+      font-family: var(--font-heading);
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    .player-earnings {
+      font-family: var(--font-heading);
+      font-size: 0.9rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #ffd700, #ff8c00);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .register-cta {
+      margin-top: 80px;
+      background: linear-gradient(135deg, rgba(157, 0, 255, 0.08), rgba(0, 212, 255, 0.04));
+      border: 1px solid var(--border-dim);
+      border-radius: 16px;
+      padding: 60px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .register-cta::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--neon-purple), var(--neon-blue), transparent);
+    }
+    .register-cta h3 {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #fff, var(--neon-blue));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 14px;
+    }
+    .register-cta p {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      max-width: 440px;
+      margin: 0 auto 28px;
+    }
+    .register-cta-btns {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    @media (max-width: 768px) {
+      .leaderboard-head,
+      .leaderboard-row {
+        grid-template-columns: 40px 1fr 80px;
+      }
+      .leaderboard-head > *:nth-child(3),
+      .leaderboard-head > *:nth-child(5),
+      .leaderboard-row > *:nth-child(3),
+      .leaderboard-row > *:nth-child(5) {
+        display: none;
+      }
+      .register-cta { padding: 36px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="particles-canvas"></canvas>
+<div class="noise-overlay"></div>
+<div class="scan-line"></div>
+
+<nav>
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">
+      <div class="nav-logo-icon">
+        <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="18,2 34,10 34,26 18,34 2,26 2,10" fill="none" stroke="url(#logoGrad)" stroke-width="1.5"/>
+          <path d="M10 18h4M16 14v8M20 16h6M23 13v10" stroke="url(#logoGrad2)" stroke-width="1.5" stroke-linecap="round"/>
+          <defs>
+            <linearGradient id="logoGrad" x1="2" y1="2" x2="34" y2="34" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#bf00ff"/><stop offset="100%" stop-color="#00d4ff"/>
+            </linearGradient>
+            <linearGradient id="logoGrad2" x1="10" y1="13" x2="26" y2="28" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#00d4ff"/><stop offset="100%" stop-color="#bf00ff"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <span class="nav-logo-text">NEXUS</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="../index.html">Главная</a></li>
+      <li><a href="zones.html">Игровые Зоны</a></li>
+      <li><a href="prices.html">Цены</a></li>
+      <li><a href="tournaments.html" class="active">Турниры</a></li>
+      <li><a href="contact.html">Контакты</a></li>
+      <li><a href="prices.html" class="nav-cta"><span>Забронировать ПК</span></a></li>
+    </ul>
+    <button class="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="mobile-menu">
+  <a href="../index.html">Главная</a>
+  <a href="zones.html">Игровые Зоны</a>
+  <a href="prices.html">Цены</a>
+  <a href="tournaments.html">Турниры</a>
+  <a href="contact.html">Контакты</a>
+</div>
+
+<main>
+  <section class="page-hero">
+    <div class="page-hero-content container">
+      <div class="page-hero-eyebrow">Соревнуйся и Побеждай</div>
+      <h1 class="page-hero-title">Турниры</h1>
+      <p class="page-hero-desc">Еженедельные киберспортивные события с реальными призами. Докажи, что ты лучший в NEXUS.</p>
+    </div>
+  </section>
+
+  <section class="tournaments-section">
+    <div class="container">
+      <div class="ticker-wrap">
+        <div class="ticker">
+          <div class="ticker-item"><span>CS2 Weekly</span> <span class="ticker-dot"></span> Регистрация открыта <span class="ticker-dot"></span> Приз: $500</div>
+          <div class="ticker-item"><span>Valorant Cup</span> <span class="ticker-dot"></span> 15 марта <span class="ticker-dot"></span> Приз: $300</div>
+          <div class="ticker-item"><span>Dota 2 Invitational</span> <span class="ticker-dot"></span> 22 марта <span class="ticker-dot"></span> Приз: $800</div>
+          <div class="ticker-item"><span>Apex Legends Clash</span> <span class="ticker-dot"></span> 5 апреля <span class="ticker-dot"></span> Приз: $250</div>
+          <div class="ticker-item"><span>Ежемесячный Гранд-Финал</span> <span class="ticker-dot"></span> 28 апреля <span class="ticker-dot"></span> Приз: $2000</div>
+          <div class="ticker-item"><span>CS2 Weekly</span> <span class="ticker-dot"></span> Регистрация открыта <span class="ticker-dot"></span> Приз: $500</div>
+          <div class="ticker-item"><span>Valorant Cup</span> <span class="ticker-dot"></span> 15 марта <span class="ticker-dot"></span> Приз: $300</div>
+          <div class="ticker-item"><span>Dota 2 Invitational</span> <span class="ticker-dot"></span> 22 марта <span class="ticker-dot"></span> Приз: $800</div>
+          <div class="ticker-item"><span>Apex Legends Clash</span> <span class="ticker-dot"></span> 5 апреля <span class="ticker-dot"></span> Приз: $250</div>
+          <div class="ticker-item"><span>Ежемесячный Гранд-Финал</span> <span class="ticker-dot"></span> 28 апреля <span class="ticker-dot"></span> Приз: $2000</div>
+        </div>
+      </div>
+
+      <div class="tournaments-grid">
+
+        <div class="tournament-card">
+          <div class="tournament-bg-accent" style="background:radial-gradient(circle, #4fc3f7, transparent)"></div>
+          <div class="tournament-header">
+            <span class="tournament-game-badge badge-cs2">CS2</span>
+            <div class="tournament-status status-open">
+              <div class="status-dot"></div>
+              Регистрация Открыта
+            </div>
+          </div>
+          <div class="tournament-body">
+            <h3 class="tournament-title">NEXUS Еженедельный Showdown</h3>
+            <p class="tournament-desc">Конкурентный CS2 5v5 с вето карт, сетками BO3 и живым комментарием на больших экранах. Открыто для всех уровней — соло или с командой.</p>
+            <div class="tournament-meta">
+              <div class="tournament-meta-item">
+                <span class="meta-label">Дата</span>
+                <span class="meta-value">Каждую Субботу</span>
+              </div>
+              <div class="tournament-meta-item">
+                <span class="meta-label">Format</span>
+                <span class="meta-value">5v5 · BO3</span>
+              </div>
+              <div class="tournament-meta-item">
+                <span class="meta-label">Prize Pool</span>
+                <span class="meta-value prize-value">$500</span>
+              </div>
+              <div class="tournament-meta-item">
+                <span class="meta-label">Slots</span>
+                <span class="meta-value">16 Teams</span>
+              </div>
+            </div>
+          </div>
+          <div class="tournament-footer">
+            <button class="tournament-btn">Зарегистрироваться</button>
+          </div>
+        </div>
+
+        <div class="tournament-card">
+          <div class="tournament-bg-accent" style="background:radial-gradient(circle, #ff4655, transparent)"></div>
+          <div class="tournament-header">
+            <span class="tournament-game-badge badge-valorant">Valorant</span>
+            <div class="tournament-status status-upcoming">
+              <div class="status-dot" style="background:var(--neon-blue)"></div>
+              Скоро
+            </div>
+          </div>
+          <div class="tournament-body">
+            <h3 class="tournament-title">NEXUS Valorant Кубок</h3>
+            <p class="tournament-desc">Тактические дуэли 5v5. Полный турнирный сетка с едиными настройками. Про Зона обязательна для всех зарегистрированных команд.</p>
+            <div class="tournament-meta">
+              <div class="tournament-meta-item">
+                <span class="meta-label">Дата</span>
+                <span class="meta-value">15 марта 2025</span>
+              </div>
+              <div class="tournament-meta-item">
+                <span class="meta-label">Format</span>
+                <span class="meta-value">5v5 · BO3</span>
+              </div>
+              <div class="tournament-meta-item">
+                <span class="meta-label">Prize Pool</span>
+                <span class="meta-value prize-value">$300</span>
+              </div>
+              <div class="tournament-meta-item">
+                <span class="meta-label">Slots</span>
+                <span class="meta-value">8 Teams</span>
+              </div>
+            </div>
+          </div>
+          <div class="tournament-footer">
+            <button class="tournament-btn">Зарегистрироваться</button>
+          </div>
+        </div>
+
+        <div class="tournament-card">
+          <div class="tournament-bg-accent" style="background:radial-gradient(circle, #ff6b35, transparent)"></div>
+          <div class="tournament-header">
+            <span class="tournament-game-badge badge-dota">Dota 2</span>
+            <div class="tournament-status status-upcoming">
+              <div class="status-dot" style="background:var(--neon-blue)"></div>
+              Скоро
+            </div>
+          </div>
+          <div class="tournament-body">
+            <h3 class="tournament-title">NEXUS Dota Инвитейшнл</h3>
+            <p class="tournament-desc">Наш главный Dota 2 ивент месяца. Приглашённые команды плюс открытый отбор. Живой каст с выделенной зоной для зрителей.</p>
+            <div class="tournament-meta">
+              <div class="tournament-meta-item">
+                <span class="meta-label">Дата</span>
+                <span class="meta-value">22 марта 2025</span>
+              </div>
+              <div class="tournament-meta-item">
+                <span class="meta-label">Format</span>
+                <span class="meta-value">5v5 · BO3/5</span>
+              </div>
+              <div class="tournament-meta-item">
+                <span class="meta-label">Prize Pool</span>
+                <span class="meta-value prize-value">$800</span>
+              </div>
+              <div class="tournament-meta-item">
+                <span class="meta-label">Slots</span>
+                <span class="meta-value">12 Teams</span>
+              </div>
+            </div>
+          </div>
+          <div class="tournament-footer">
+            <button class="tournament-btn">Зарегистрироваться</button>
+          </div>
+        </div>
+
+        <div class="tournament-card">
+          <div class="tournament-bg-accent" style="background:radial-gradient(circle, #bf00ff, transparent)"></div>
+          <div class="tournament-header">
+            <span class="tournament-game-badge" style="color:#bf00ff;border-color:rgba(191,0,255,0.3);background:rgba(191,0,255,0.08)">Multi-Game</span>
+            <div class="tournament-status" style="color:#ffd700">
+              <div class="status-dot" style="background:#ffd700;box-shadow:0 0 8px #ffd700"></div>
+              Гранд-Финал
+            </div>
+          </div>
+          <div class="tournament-body">
+            <h3 class="tournament-title">NEXUS Ежемесячный Гранд-Финал</h3>
+            <p class="tournament-desc">Главный чемпионат NEXUS. Победители каждой недели сражаются в CS2, Valorant и Dota 2. Самый большой призовой фонд месяца.</p>
+            <div class="tournament-meta">
+              <div class="tournament-meta-item">
+                <span class="meta-label">Дата</span>
+                <span class="meta-value">28 апреля 2025</span>
+              </div>
+              <div class="tournament-meta-item">
+                <span class="meta-label">Format</span>
+                <span class="meta-value">Multi-Game</span>
+              </div>
+              <div class="tournament-meta-item">
+                <span class="meta-label">Prize Pool</span>
+                <span class="meta-value prize-value">$2,000</span>
+              </div>
+              <div class="tournament-meta-item">
+                <span class="meta-label">Entry</span>
+                <span class="meta-value">Invite Only</span>
+              </div>
+            </div>
+          </div>
+          <div class="tournament-footer">
+            <button class="tournament-btn" style="color:#ffd700;border-color:rgba(255,215,0,0.25)">Подробнее</button>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="leaderboard-section">
+        <div class="section-header">
+          <span class="section-tag">Зал Славы</span>
+          <h2 class="section-title">Лучшие Игроки</h2>
+          <p class="section-desc">Самые высокооплачиваемые и титулованные чемпионы за всё время.</p>
+        </div>
+
+        <div class="leaderboard-table">
+          <div class="leaderboard-head">
+            <div>#</div>
+            <div>Игрок</div>
+            <div>Игра</div>
+            <div>Побед в Турнирах</div>
+            <div>Выиграно</div>
+          </div>
+
+          <div class="leaderboard-row">
+            <div class="rank-number rank-1">01</div>
+            <div class="player-info">
+              <div class="player-avatar" style="background:linear-gradient(135deg,#ffd700,#ff8c00)">AX</div>
+              <div>
+                <div class="player-name">AxelStrike</div>
+                <div class="player-handle">@axelstrike</div>
+              </div>
+            </div>
+            <div class="player-game-tag">CS2</div>
+            <div class="player-wins">14 Побед</div>
+            <div class="player-earnings">$3,200</div>
+          </div>
+
+          <div class="leaderboard-row">
+            <div class="rank-number rank-2">02</div>
+            <div class="player-info">
+              <div class="player-avatar" style="background:linear-gradient(135deg,#bf00ff,#7700aa)">VX</div>
+              <div>
+                <div class="player-name">VoidX</div>
+                <div class="player-handle">@voidx_gg</div>
+              </div>
+            </div>
+            <div class="player-game-tag">Valorant</div>
+            <div class="player-wins">11 Побед</div>
+            <div class="player-earnings">$2,750</div>
+          </div>
+
+          <div class="leaderboard-row">
+            <div class="rank-number rank-3">03</div>
+            <div class="player-info">
+              <div class="player-avatar" style="background:linear-gradient(135deg,#00d4ff,#0088cc)">NV</div>
+              <div>
+                <div class="player-name">NovaLynx</div>
+                <div class="player-handle">@novalynx</div>
+              </div>
+            </div>
+            <div class="player-game-tag">Dota 2</div>
+            <div class="player-wins">9 Побед</div>
+            <div class="player-earnings">$2,100</div>
+          </div>
+
+          <div class="leaderboard-row">
+            <div class="rank-number">04</div>
+            <div class="player-info">
+              <div class="player-avatar" style="background:linear-gradient(135deg,#ff2d78,#cc0044)">PH</div>
+              <div>
+                <div class="player-name">PhantomAce</div>
+                <div class="player-handle">@phantomace</div>
+              </div>
+            </div>
+            <div class="player-game-tag">CS2</div>
+            <div class="player-wins">7 Побед</div>
+            <div class="player-earnings">$1,600</div>
+          </div>
+
+          <div class="leaderboard-row">
+            <div class="rank-number">05</div>
+            <div class="player-info">
+              <div class="player-avatar" style="background:linear-gradient(135deg,#00ff88,#007744)">SK</div>
+              <div>
+                <div class="player-name">SkyKiller</div>
+                <div class="player-handle">@skykiller99</div>
+              </div>
+            </div>
+            <div class="player-game-tag">Valorant</div>
+            <div class="player-wins">6 Побед</div>
+            <div class="player-earnings">$1,350</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="register-cta">
+        <h3>Готов Соревноваться?</h3>
+        <p>Вступай в наш Discord для получения обновлений турниров в реальном времени, поиска команды и ссылок на регистрацию.</p>
+        <div class="register-cta-btns">
+          <a href="contact.html" class="btn-primary"><span>Вступить в Discord</span></a>
+          <a href="prices.html" class="btn-secondary"><span>Забронировать ПК</span></a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-logo-area">
+        <a href="../index.html" class="footer-logo">
+          <div class="nav-logo-icon" style="width:28px;height:28px">
+            <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <polygon points="18,2 34,10 34,26 18,34 2,26 2,10" fill="none" stroke="url(#fLogoG)" stroke-width="1.5"/>
+              <path d="M10 18h4M16 14v8M20 16h6M23 13v10" stroke="url(#fLogoG2)" stroke-width="1.5" stroke-linecap="round"/>
+              <defs>
+                <linearGradient id="fLogoG" x1="2" y1="2" x2="34" y2="34" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#bf00ff"/><stop offset="100%" stop-color="#00d4ff"/></linearGradient>
+                <linearGradient id="fLogoG2" x1="10" y1="13" x2="26" y2="28" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#00d4ff"/><stop offset="100%" stop-color="#bf00ff"/></linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <span class="footer-logo-text">NEXUS</span>
+        </a>
+        <p class="footer-tagline">The ultimate PC gaming club experience. Where champions are made.</p>
+      </div>
+      <div class="footer-nav-groups">
+        <div class="footer-nav-group">
+          <h5>Navigate</h5>
+          <a href="../index.html">Home</a>
+          <a href="zones.html">Gaming Zones</a>
+          <a href="prices.html">Prices</a>
+          <a href="tournaments.html">Tournaments</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copyright">© 2024 NEXUS Gaming Club. Все права защищены.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../scripts/main.js"></script>
+</body>
+</html>

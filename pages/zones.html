@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Игровые Зоны — NEXUS Gaming Club</title>
+  <meta name="description" content="Explore our Standard, Pro, and VIP gaming zones — each engineered for peak performance." />
+  <link rel="stylesheet" href="../styles/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='24' font-size='24'>🎮</text></svg>" />
+  <style>
+    .zones-features-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      margin-top: 80px;
+    }
+    .mini-feature {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 24px;
+      background: var(--bg-card);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      transition: border-color 0.3s ease;
+    }
+    .mini-feature:hover {
+      border-color: var(--border-glow);
+    }
+    .mini-feature-icon {
+      width: 40px;
+      height: 40px;
+      flex-shrink: 0;
+      background: rgba(157,0,255,0.08);
+      border: 1px solid rgba(157,0,255,0.15);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .mini-feature-icon svg {
+      width: 18px; height: 18px;
+    }
+    .mini-feature-title {
+      font-family: var(--font-heading);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+    .mini-feature-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .zone-cta-row {
+      margin-top: 80px;
+      text-align: center;
+      padding: 60px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-dim);
+      border-radius: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+    .zone-cta-row::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--neon-purple), var(--neon-blue), transparent);
+    }
+    .zone-cta-row h3 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-primary);
+      margin-bottom: 14px;
+      letter-spacing: -0.02em;
+    }
+    .zone-cta-row p {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      margin-bottom: 28px;
+      max-width: 420px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .zone-card .zone-image-decoration {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .zone-image-decoration svg {
+      width: 100px;
+      height: 100px;
+      opacity: 0.08;
+    }
+    .zone-pc-count {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-heading);
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 4px 12px;
+      margin-bottom: 16px;
+    }
+    @media (max-width: 768px) {
+      .zones-features-row { grid-template-columns: 1fr; }
+      .zone-cta-row { padding: 36px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="particles-canvas"></canvas>
+<div class="noise-overlay"></div>
+<div class="scan-line"></div>
+
+<nav>
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">
+      <div class="nav-logo-icon">
+        <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="18,2 34,10 34,26 18,34 2,26 2,10" fill="none" stroke="url(#logoGrad)" stroke-width="1.5"/>
+          <path d="M10 18h4M16 14v8M20 16h6M23 13v10" stroke="url(#logoGrad2)" stroke-width="1.5" stroke-linecap="round"/>
+          <defs>
+            <linearGradient id="logoGrad" x1="2" y1="2" x2="34" y2="34" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#bf00ff"/><stop offset="100%" stop-color="#00d4ff"/>
+            </linearGradient>
+            <linearGradient id="logoGrad2" x1="10" y1="13" x2="26" y2="28" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#00d4ff"/><stop offset="100%" stop-color="#bf00ff"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <span class="nav-logo-text">NEXUS</span>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="../index.html">Главная</a></li>
+      <li><a href="zones.html" class="active">Игровые Зоны</a></li>
+      <li><a href="prices.html">Цены</a></li>
+      <li><a href="tournaments.html">Турниры</a></li>
+      <li><a href="contact.html">Контакты</a></li>
+      <li><a href="prices.html" class="nav-cta"><span>Забронировать ПК</span></a></li>
+    </ul>
+
+    <button class="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="mobile-menu">
+  <a href="../index.html">Главная</a>
+  <a href="zones.html">Игровые Зоны</a>
+  <a href="prices.html">Цены</a>
+  <a href="tournaments.html">Турниры</a>
+  <a href="contact.html">Контакты</a>
+</div>
+
+<main>
+  <section class="page-hero">
+    <div class="page-hero-content container">
+      <div class="page-hero-eyebrow">Наши Помещения</div>
+      <h1 class="page-hero-title">Игровые Зоны</h1>
+      <p class="page-hero-desc">Три уникальных пространства для каждого уровня игрока — от любителя до профи.</p>
+    </div>
+  </section>
+
+  <section class="zones-section">
+    <div class="container">
+      <div class="zones-grid">
+
+        <div class="zone-card">
+          <div class="zone-card-image">
+            <div class="zone-image-placeholder standard-zone-img">
+              <div class="zone-image-decoration">
+                <img style="max-width: 100%;" src="../img/standart.jpg" alt="standart">
+              </div>
+              <div class="zone-badge badge-standard">Стандарт</div>
+            </div>
+          </div>
+          <div class="zone-card-body">
+            <div class="zone-pc-count">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
+              </svg>
+              48 ПК доступно
+            </div>
+            <h3 class="zone-name">Стандартная Зона</h3>
+            <p class="zone-desc">Идеальная точка входа в мир NEXUS. Мощные компьютеры для казуальной игры, рейтинговых матчей и долгих игровых ночей.</p>
+            <div class="zone-specs">
+              <div class="zone-spec">
+                <span class="zone-spec-dot dot-blue"></span>
+                RTX 3080 / Intel Core i7-13700K
+              </div>
+              <div class="zone-spec">
+                <span class="zone-spec-dot dot-blue"></span>
+                1080p 144Гц IPS мониторы
+              </div>
+              <div class="zone-spec">
+                <span class="zone-spec-dot dot-blue"></span>
+                32ГБ DDR5 ОЗУ · 1ТБ NVMe SSD
+              </div>
+              <div class="zone-spec">
+                <span class="zone-spec-dot dot-blue"></span>
+                Периферия SteelSeries
+              </div>
+              <div class="zone-spec">
+                <span class="zone-spec-dot dot-blue"></span>
+                Выделенный канал 500Мбит/с
+              </div>
+            </div>
+          </div>
+          <div class="zone-card-glow glow-blue"></div>
+        </div>
+
+        <div class="zone-card">
+          <div class="zone-card-image">
+            <div class="zone-image-placeholder pro-zone-img">
+              <div class="zone-image-decoration">
+                <img style="max-width: 100%;" src="../img/pro.jpg" alt="pro">
+              </div>
+              <div class="zone-badge badge-pro">Pro</div>
+            </div>
+          </div>
+          <div class="zone-card-body">
+            <div class="zone-pc-count">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
+              </svg>
+              36 ПК доступно
+            </div>
+            <h3 class="zone-name">Про Зона</h3>
+            <p class="zone-desc">Создана для серьёзных игроков и будущих профессионалов. Про Зона предлагает железо без компромиссов — сверхвысокая частота кадров и периферия турнирного уровня.</p>
+            <div class="zone-specs">
+              <div class="zone-spec">
+                <span class="zone-spec-dot dot-purple"></span>
+                RTX 4080 / AMD Ryzen 9 7950X
+              </div>
+              <div class="zone-spec">
+                <span class="zone-spec-dot dot-purple"></span>
+                1440p 240Гц QD-OLED мониторы
+              </div>
+              <div class="zone-spec">
+                <span class="zone-spec-dot dot-purple"></span>
+                64ГБ DDR5 ОЗУ · 2ТБ NVMe SSD
+              </div>
+              <div class="zone-spec">
+                <span class="zone-spec-dot dot-purple"></span>
+                Периферия Logitech G Pro X
+              </div>
+              <div class="zone-spec">
+                <span class="zone-spec-dot dot-purple"></span>
+                Выделенный канал 1Гбит/с
+              </div>
+            </div>
+          </div>
+          <div class="zone-card-glow glow-purple"></div>
+        </div>
+
+        <div class="zone-card">
+          <div class="zone-card-image">
+            <div class="zone-image-placeholder vip-zone-img">
+              <div class="zone-image-decoration">
+                <img style="max-width: 100%;" src="../img/vip.jpg" alt="vip">
+              </div>
+              <div class="zone-badge badge-vip">VIP</div>
+            </div>
+          </div>
+          <div class="zone-card-body">
+            <div class="zone-pc-count">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
+              </svg>
+              12 Приватных Кабин
+            </div>
+            <h3 class="zone-name">VIP Зона</h3>
+            <p class="zone-desc">Вершина игровой роскоши. Приватные кабины, абсолютная тишина, самые мощные машины на планете и консьерж-сервис по требованию.</p>
+            <div class="zone-specs">
+              <div class="zone-spec">
+                <span class="zone-spec-dot dot-gold"></span>
+                RTX 4090 / Intel Core i9-14900K
+              </div>
+              <div class="zone-spec">
+                <span class="zone-spec-dot dot-gold"></span>
+                4K 240Гц OLED двойной монитор
+              </div>
+              <div class="zone-spec">
+                <span class="zone-spec-dot dot-gold"></span>
+                128ГБ DDR5 ОЗУ · 4ТБ NVMe RAID
+              </div>
+              <div class="zone-spec">
+                <span class="zone-spec-dot dot-gold"></span>
+                Периферия HHKB / Finalmouse
+              </div>
+              <div class="zone-spec">
+                <span class="zone-spec-dot dot-gold"></span>
+                Выделенная оптика 10Гбит/с
+              </div>
+            </div>
+          </div>
+          <div class="zone-card-glow glow-gold"></div>
+        </div>
+
+      </div>
+
+      <div class="zones-features-row">
+        <div class="mini-feature">
+          <div class="mini-feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="url(#mf1)" stroke-width="1.5">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <defs><linearGradient id="mf1" x1="4" y1="2" x2="20" y2="22" gradientUnits="userSpaceOnUse"><stop stop-color="#bf00ff"/><stop offset="1" stop-color="#00d4ff"/></linearGradient></defs>
+            </svg>
+          </div>
+          <div>
+            <div class="mini-feature-title">Защита от читов</div>
+            <div class="mini-feature-desc">Чистые установки на всех системах с защитой на уровне железа — никакого мусорного ПО.</div>
+          </div>
+        </div>
+
+        <div class="mini-feature">
+          <div class="mini-feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="url(#mf2)" stroke-width="1.5">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+              <defs><linearGradient id="mf2" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse"><stop stop-color="#00d4ff"/><stop offset="1" stop-color="#bf00ff"/></linearGradient></defs>
+            </svg>
+          </div>
+          <div>
+            <div class="mini-feature-title">Тех. Поддержка 24/7</div>
+            <div class="mini-feature-desc">Наши технические специалисты всегда на месте, чтобы каждая сессия прошла идеально.</div>
+          </div>
+        </div>
+
+        <div class="mini-feature">
+          <div class="mini-feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="url(#mf3)" stroke-width="1.5">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              <defs><linearGradient id="mf3" x1="1" y1="3" x2="23" y2="21" gradientUnits="userSpaceOnUse"><stop stop-color="#bf00ff"/><stop offset="1" stop-color="#00d4ff"/></linearGradient></defs>
+            </svg>
+          </div>
+          <div>
+            <div class="mini-feature-title">Сообщество и События</div>
+            <div class="mini-feature-desc">Регулярные LAN-вечеринки, еженедельные турниры и активное сообщество в Discord.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="zone-cta-row">
+        <h3>Готов Играть?</h3>
+        <p>Выбери свою зону и забронируй сессию прямо сейчас. Приходи без записи — для VIP рекомендуем бронировать заранее.</p>
+        <a href="prices.html" class="btn-primary"><span>Смотреть Цены и Бронировать</span></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-logo-area">
+        <a href="../index.html" class="footer-logo">
+          <div class="nav-logo-icon" style="width:28px;height:28px">
+            <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <polygon points="18,2 34,10 34,26 18,34 2,26 2,10" fill="none" stroke="url(#fLogoG)" stroke-width="1.5"/>
+              <path d="M10 18h4M16 14v8M20 16h6M23 13v10" stroke="url(#fLogoG2)" stroke-width="1.5" stroke-linecap="round"/>
+              <defs>
+                <linearGradient id="fLogoG" x1="2" y1="2" x2="34" y2="34" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#bf00ff"/><stop offset="100%" stop-color="#00d4ff"/></linearGradient>
+                <linearGradient id="fLogoG2" x1="10" y1="13" x2="26" y2="28" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#00d4ff"/><stop offset="100%" stop-color="#bf00ff"/></linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <span class="footer-logo-text">NEXUS</span>
+        </a>
+        <p class="footer-tagline">Лучший PC игровой клуб. Место, где рождаются чемпионы.</p>
+      </div>
+      <div class="footer-nav-groups">
+        <div class="footer-nav-group">
+          <h5>Навигация</h5>
+          <a href="../index.html">Главная</a>
+          <a href="zones.html">Игровые Зоны</a>
+          <a href="prices.html">Цены</a>
+          <a href="tournaments.html">Турниры</a>
+          <a href="contact.html">Контакты</a>
+        </div>
+        <div class="footer-nav-group">
+          <h5>Соцсети</h5>
+          <a href="#">Discord</a>
+          <a href="#">Instagram</a>
+          <a href="#">Twitter / X</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copyright">© 2024 NEXUS Gaming Club. Все права защищены.</span>
+      <div class="footer-bottom-links">
+        <a href="#">Политика конфиденциальности</a>
+        <a href="#">Условия использования</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="../scripts/main.js"></script>
+</body>
+</html>
